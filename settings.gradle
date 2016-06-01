@@ -1,10 +1,8 @@
 rootProject.name = "toolpack"
 
 // app
-include ':app'
+include ':app', ':libzxing'
 
 // submodules
 def subModulesDir = "subModule"
 
-include ':libzxing'
-project(':libzxing').projectDir = new File(subModulesDir, 'libzxing')
