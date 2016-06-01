@@ -1,19 +1,54 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
+/*
+ * Copyright (C) 2015 Baidu, Inc. All Rights Reserved.
+ *
+ */
+
 buildscript {
     repositories {
+        maven {
+            url "${project.rootDir}/m2repository/"
+        }
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.0'
+        classpath 'com.android.tools.build:gradle:1.5.0'
+    }
+}
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+group = "toolpackApp"
+description = "ToolPackApp for Android"
+def GRADLE_PLUGIN_VERSION
+buildscript.configurations.classpath.resolvedConfiguration.firstLevelModuleDependencies.each {
+    if (it.name.startsWith("com.android.tools.build:gradle:")) {
+        GRADLE_PLUGIN_VERSION = it.moduleVersion
     }
 }
 
 allprojects {
     repositories {
+        maven {
+            url "${project.rootDir}/m2repository/"
+        }
         jcenter()
     }
+}
+
+subprojects { project->
+    if (project.name.equals('app')) {
+        println "android gradle plugin version "+GRADLE_PLUGIN_VERSION
+        if (GRADLE_PLUGIN_VERSION.compareToIgnoreCase("1.4.0") < 0) {
+            throw java.lang.RuntimeException("We need android gradle plugin version > 1.4.0")
+        } else {
+        }
+    }
+}
+
+// Default Tasks 定义
+defaultTasks 'clean',':app:clean', ':app:assembleDebug'
+
+// Debug 编译
+task Debug(dependsOn:':app:assembleDevDebug') {
+
 }

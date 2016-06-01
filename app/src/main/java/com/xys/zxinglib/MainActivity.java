@@ -6,13 +6,9 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +19,6 @@ import com.loopj.android.http.RequestParams;
 import com.xys.libzxing.zxing.activity.CaptureActivity;
 import com.xys.libzxing.zxing.encoding.EncodingUtils;
 
-import java.net.URLEncoder;
 
 public class MainActivity extends Activity {
 
@@ -111,12 +106,10 @@ public class MainActivity extends Activity {
                     params.put("type", "publish");
                     params.put("content", android.net.Uri.encode(pasteStr));
                     client.get(url, params, new AsyncHttpResponseHandler() {
-                        @Override
                         public void onSuccess(int i, org.apache.http.Header[] headers, byte[] bytes) {
                             Toast.makeText(getApplicationContext(), "广播消息成功", Toast.LENGTH_LONG).show();
                         }
 
-                        @Override
                         public void onFailure(int i, org.apache.http.Header[] headers, byte[] bytes, Throwable throwable) {
                             Toast.makeText(getApplicationContext(), "广播消息失败", Toast.LENGTH_LONG).show();
                         }
